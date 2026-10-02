@@ -773,7 +773,7 @@ elif selected_nav == "Attendance Calculator":
         if target_dec > 0:
             missable = int((attended - target_dec * total_held) // target_dec)
             if missable > 0:
-                st.info(f"💡 **Safety Margin**: You can afford to miss up to **{missable} upcoming class{'es' if missable > 1 else ''}** and still maintain $\ge {target_pct}\%$ attendance.")
+                st.info(f"💡 **Safety Margin**: You can afford to miss up to **{missable} upcoming class{'es' if missable > 1 else ''}** and still maintain ≥ {target_pct}% attendance.")
             else:
                 st.info(f"⚠️ **Borderline**: You are right at {target_pct}%. Missing even 1 class will cause shortage.")
     else:
