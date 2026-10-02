@@ -6,7 +6,7 @@ import os
 
 # Page configuration
 st.set_page_config(
-page_title="MBA 2nd Year 3rd Sem - Attendance Dashboard",
+    page_title="MBA 2nd Year 3rd Sem - Attendance Dashboard",
     page_icon="🎓",
     layout="wide",
     initial_sidebar_state="expanded"
@@ -163,7 +163,7 @@ st.markdown("""
         box-shadow: 0 0 15px rgba(99, 102, 241, 0.5);
     }
 
-    /* Luxury Dark Card with Soft Glassmorphic Glow */
+    /* Luxury Dark Card */
     .dark-card {
         background: #131B2E;
         border-radius: 20px;
@@ -186,7 +186,7 @@ st.markdown("""
         align-items: center;
     }
 
-    /* 6 Horizontal Mini Cards with Glowing Colors */
+    /* 6 Horizontal Mini Cards */
     .stat-row-grid {
         display: grid;
         grid-template-columns: repeat(6, 1fr);
@@ -261,18 +261,8 @@ st.markdown("""
     }
 
     /* Form Inputs in Dark Theme */
-    div[data-testid="stSelectbox"] > div {
-        border-radius: 12px !important;
-        border: 1px solid rgba(255, 255, 255, 0.12) !important;
-        background-color: #131B2E !important;
-        color: #F8FAFC !important;
-    }
-    div[data-testid="stTextInput"] input {
-        border-radius: 12px !important;
-        border: 1px solid rgba(255, 255, 255, 0.12) !important;
-        background-color: #131B2E !important;
-        color: #F8FAFC !important;
-    }
+    div[data-testid="stSelectbox"] > div,
+    div[data-testid="stTextInput"] input,
     div[data-testid="stNumberInput"] input {
         border-radius: 12px !important;
         border: 1px solid rgba(255, 255, 255, 0.12) !important;
@@ -302,7 +292,7 @@ def load_data():
 df = load_data()
 
 if df is None:
-    st.error("⚠️ 'attendance.csv' not found. Please ensure the CSV file is generated.")
+    st.error("⚠️ 'attendance.csv' not found. Please ensure the CSV file is generated and in the project folder.")
     st.stop()
 
 # Key metrics
@@ -481,7 +471,7 @@ if selected_nav in ["Dashboard", "Attendance"]:
                         <div class="mini-val" style="color: #FBBF24;">{total_defaulters}</div>
                     </div>
                     <div class="mini-stat-card">
-                        <div class="mini-icon-box" style="background: rgba(6, 182, 212, 0.16); color: #22D3EE; border: 1px solid rgba(6, 182, 212, 0.3);">👨‍🎓</div>
+                        <div class="mini-icon-box" style="background: rgba(6, 182, 212, 0.16); color: #22D3EE; border: 1px solid rgba(6, 182, 212, 0.3);">🎓</div>
                         <div class="mini-label">Students</div>
                         <div class="mini-val" style="color: #22D3EE;">{total_students}</div>
                     </div>
@@ -517,7 +507,6 @@ if selected_nav in ["Dashboard", "Attendance"]:
         subj_diff = subj_diff.head(6)
 
         fig_diff = go.Figure()
-        # Vibrant colors: green for positive variance, bright neon pink/red for negative variance
         bar_colors = ['#10B981' if v >= 0 else '#F43F5E' for v in subj_diff['Diff']]
         fig_diff.add_trace(go.Bar(
             x=subj_diff['Course_Code'],
@@ -539,7 +528,7 @@ if selected_nav in ["Dashboard", "Attendance"]:
         st.markdown("</div>", unsafe_allow_html=True)
 
     with r2_col2:
-        # Subject Benchmarks (Overtime style)
+        # Subject Benchmarks
         st.markdown("""
             <div class="dark-card">
                 <div class="card-title">
@@ -551,7 +540,6 @@ if selected_nav in ["Dashboard", "Attendance"]:
         top_courses = df.groupby('Course_Code')['Attendance_Percentage'].mean().reset_index()
         top_courses = top_courses.sort_values('Attendance_Percentage', ascending=False).head(7)
 
-        # Gradient bar coloring with highlighted champion course in bright neon cyan
         bar_c2 = ['#38BDF8' if i == 0 else ('#818CF8' if i < 3 else '#6366F1') for i in range(len(top_courses))]
         fig_bench = go.Figure(go.Bar(
             x=top_courses['Course_Code'],
@@ -572,7 +560,7 @@ if selected_nav in ["Dashboard", "Attendance"]:
         st.markdown("</div>", unsafe_allow_html=True)
 
     with r2_col3:
-        # Attendance Source 2x2 grid with glowing numbers
+        # Attendance Source 2x2 grid
         st.markdown(f"""
             <div class="dark-card">
                 <div class="card-title">
@@ -793,7 +781,6 @@ elif selected_nav == "Attendance Calculator":
             f"Reaching this target will bring your attendance record to **{proj_att}/{proj_tot} ({proj_pct:.2f}%)**."
         )
 
-        # Simulation
         sim_rows = []
         max_steps = max(required_classes + 3, 6)
         for step in range(1, max_steps + 1):
