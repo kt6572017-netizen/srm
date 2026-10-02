@@ -6,7 +6,7 @@ import os
 
 # Page configuration
 st.set_page_config(
-    page_title= (_srm_) - Attendance Dashboard",
+page_title="MBA 2nd Year 3rd Sem - Attendance Dashboard",
     page_icon="🎓",
     layout="wide",
     initial_sidebar_state="expanded"
